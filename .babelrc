@@ -1,8 +1,7 @@
 {
   presets: [
     "es2015",
-    "react",
-    "survivejs-kanban"
+    "react"
   ],
   "env": {
     "start": {
@@ -10,5 +9,8 @@
         "react-hmre"
       ]
     }
-  }
+  },
+  "plugins": [
+    'babel-plugin-transform-class-properties'
+  ]
 }
