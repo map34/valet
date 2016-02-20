@@ -201,6 +201,7 @@ table {
   width: 50%;
   font-size: 11px;
   margin: 0 auto;
+  border-collapse: collapse;
 }
 
 th, td {
@@ -216,7 +217,7 @@ tr td:first-child {
 }
 
 .slot {
-  height: 18px;
+  height: 30px;
   width: 100%;
   background: #fff;
 }

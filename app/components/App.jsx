@@ -80,13 +80,27 @@ export default class App extends React.Component {
     );
   }
 
-  _handler = (day, hour) => {
-    let newCells = Object.assign({}, this.state.cells);
-    newCells[day][hour] = this.state.mode;
-    this.setState({
-      cells: newCells
-    });
-    this._mergeSchedule();
+  _handler = (day, hour, e) => {
+    if (e.type == 'mousedown'){
+      this.setState({
+        'down': true
+      });
+    }
+
+    if (e.type == 'mouseup'){
+      this.setState({
+        'down': false
+      });
+    }
+
+    if (this.state.down || e.type == 'mousedown') {
+      let newCells = Object.assign({}, this.state.cells);
+      newCells[day][hour] = this.state.mode;
+      this.setState({
+        cells: newCells
+      });
+      this._mergeSchedule();
+    }
   };
 
   _mergeRows = (col) => {
