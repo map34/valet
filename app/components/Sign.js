@@ -205,7 +205,7 @@ export default class Sign {
               return (this._getRowHeightForCol(d.col, rects) * rows) - boxBottomMargin;
             })
             .attr('fill', (d) => {
-              if (d.noParking){
+              if (d.noParking == 'noparking'){
                 return '#ec1c24';
               } else {
                 return '#00a651';

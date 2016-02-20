@@ -2,6 +2,40 @@ text {
   text-anchor: middle;
 }
 
+.mode-picker {
+  height: 80px;
+  display: table;
+}
+.btn {
+  display: table-cell;
+  height: 80px;
+  width: 80px;
+  border: 1px solid #333;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0.85;
+}
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.95;
+}
+
+.slot.noparking,
+.btn-noparking {
+  background: #ec1c24;
+}
+
+.slot.onehour,
+.slot.free,
+.btn-avail {
+  background: #00a651;
+}
+
+.btn-active {
+  opacity: 1;
+}
+
+
 @font-face {
   font-family: 'league_gothicregular';
   src: url('/fonts/leaguegothic-regular-webfont.eot');

@@ -8,9 +8,7 @@ export default class Cell extends React.Component {
 
 
   render() {
-    let classes = classnames('slot', {
-      active: this.props.active
-    });
+    let classes = classnames('slot', this.props.active);
 
     return (
       <div onClick={this._handler} className={classes}></div>

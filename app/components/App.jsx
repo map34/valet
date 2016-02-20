@@ -1,4 +1,5 @@
 import React from 'react';
+import ModePicker from './ModePicker.jsx';
 import Header from './Header.jsx';
 import Cell from './Cell.jsx';
 import _ from 'lodash';
@@ -28,24 +29,31 @@ export default class App extends React.Component {
     this.state = {
       days: days,
       times: times,
-      cells: cells
+      cells: cells,
+      mode: 'noparking'
     };
 
     this.Sign = new Sign();
   }
+
+  _modeClickHandler = (e) => {
+    this.setState({
+      mode: e
+    })
+  };
 
   render() {
     let dayHeaders = this.state.days.map( day => <Header headerClick={this._selectRowCol} kind='th' scope={day}/> );
     let timeRows = this.state.times.map( time =>
         <tr>
           <Header headerClick={this._selectRowCol} kind='td' scope={time}/>
-          <td><Cell day={this.state.days[0]} hour={time} active={this.state.cells[this.state.days[0]][time]}handler={this._handler} /></td>
-          <td><Cell day={this.state.days[1]} hour={time} active={this.state.cells[this.state.days[1]][time]}handler={this._handler} /></td>
-          <td><Cell day={this.state.days[2]} hour={time} active={this.state.cells[this.state.days[2]][time]}handler={this._handler} /></td>
-          <td><Cell day={this.state.days[3]} hour={time} active={this.state.cells[this.state.days[3]][time]}handler={this._handler} /></td>
-          <td><Cell day={this.state.days[4]} hour={time} active={this.state.cells[this.state.days[4]][time]}handler={this._handler} /></td>
-          <td><Cell day={this.state.days[5]} hour={time} active={this.state.cells[this.state.days[5]][time]}handler={this._handler} /></td>
-          <td><Cell day={this.state.days[6]} hour={time} active={this.state.cells[this.state.days[6]][time]}handler={this._handler} /></td>
+          <td><Cell day={this.state.days[0]} hour={time} active={this.state.cells[this.state.days[0]][time]} handler={this._handler} /></td>
+          <td><Cell day={this.state.days[1]} hour={time} active={this.state.cells[this.state.days[1]][time]} handler={this._handler} /></td>
+          <td><Cell day={this.state.days[2]} hour={time} active={this.state.cells[this.state.days[2]][time]} handler={this._handler} /></td>
+          <td><Cell day={this.state.days[3]} hour={time} active={this.state.cells[this.state.days[3]][time]} handler={this._handler} /></td>
+          <td><Cell day={this.state.days[4]} hour={time} active={this.state.cells[this.state.days[4]][time]} handler={this._handler} /></td>
+          <td><Cell day={this.state.days[5]} hour={time} active={this.state.cells[this.state.days[5]][time]} handler={this._handler} /></td>
+          <td><Cell day={this.state.days[6]} hour={time} active={this.state.cells[this.state.days[6]][time]} handler={this._handler} /></td>
         </tr>
     );
 
@@ -55,23 +63,26 @@ export default class App extends React.Component {
 
 
     return (
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {dayHeaders}
-          </tr>
-        </thead>
-        <tbody>
-          {timeRows}
-        </tbody>
-      </table>
+      <div>
+        <ModePicker selected={this.state.mode} clickHandler={this._modeClickHandler}/>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              {dayHeaders}
+            </tr>
+          </thead>
+          <tbody>
+            {timeRows}
+          </tbody>
+        </table>
+      </div>
     );
   }
 
   _handler = (day, hour) => {
     let newCells = Object.assign({}, this.state.cells);
-    newCells[day][hour] = !this.state.cells[day][hour];
+    newCells[day][hour] = this.state.mode;
     this.setState({
       cells: newCells
     });
@@ -141,11 +152,11 @@ export default class App extends React.Component {
       })
       if (selected.length === Object.keys(newCells[scope]).length){
         _.each(newCells[scope], (hour, key) => {
-          newCells[scope][key] = !hour;
+          newCells[scope][key] = this.state.mode;
         })
       } else {
         _.each(newCells[scope], (hour, key) => {
-          newCells[scope][key] = true;
+          newCells[scope][key] = this.state.mode;
         })
       }
     } else {
@@ -158,11 +169,11 @@ export default class App extends React.Component {
 
       if (_.uniq(selected).length === 1){
         _.each(newCells, (day, key) => {
-          day[scope] = !day[scope];
+          day[scope] = this.state.mode;
         });
       } else {
         _.each(newCells, (day, key) => {
-          day[scope] = true;
+          day[scope] = this.state.mode;
         });
       }
     }
