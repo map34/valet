@@ -210,6 +210,10 @@ th, td {
   cursor: pointer;
 }
 
+td::selection {
+  background: transparent;
+}
+
 
 tr th:first-child,
 tr td:first-child {
