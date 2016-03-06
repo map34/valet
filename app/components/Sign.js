@@ -45,7 +45,7 @@ export default class Sign {
   }
 
   _calculateBounds(data) {
-    this.width = parseFloat(jQuery(window).width()) / 2;
+    this.width = parseFloat(jQuery(window).width()) / 2  - 20;
     this.innerWidth = this.width - (margin * 2);
     this.height = parseFloat(jQuery(window).height());
     this.innerHeight = this.height - headerHeight - margin;
@@ -85,12 +85,13 @@ export default class Sign {
         'y': 0,
         'width': this.width,
         'height': headerHeight
-       })
-
-    this.svg.append('text')
+       });
+       this.svg.append('text')
        .text('PARKING SCHEDULE')
        .attr('class', 'h1')
-       .attr('x', 500)
+       .attr('x', (d) => {
+        return this.width / 2
+       })
        .attr('y', 72)
        .attr('fill', 'white')
   }
@@ -193,7 +194,7 @@ export default class Sign {
             .attr('x', (d) => {
               return d.col * this.colWidth + margin
             })
-            .attr('width', this.colWidth)
+            .attr('width', this.colWidth - 5)
             .attr('height', (d) => {
               let end = 0;
               if (d.hasOwnProperty('end')){
@@ -211,10 +212,25 @@ export default class Sign {
                 return '#00a651';
               }
             })
-            .attr({
-              'stroke-width': 2,
-              'stroke': 'rgb(0,0,0)'
-            });
+            .attr('class', (d) => {
+              if (d.noParking == 'noparking'){
+                return 'noparking';
+              }
+            })
+            .attr('stroke-width', (d) => {
+              if (d.noParking == 'noparking'){
+                return 2;
+              } else {
+                return 0;
+              }
+            })
+            .attr('stroke', (d) => {
+              if (d.noParking == 'noparking'){
+                return '#ec1c24';
+              } else {
+                return 'transparent';
+              }
+            })
   }
 
   _labelTimeSlots(data) {
@@ -223,11 +239,17 @@ export default class Sign {
     if (timeSlots[0] === 0){
       timeSlots.shift()
     }
+    this.svg.append('text').text('12 am').attr({
+      x: 60,
+      y: headerHeight + this.rowHeight + 10,
+      'font-size': '18px',
+      fill: 'black'
+    });
     this.svg.selectAll('text.times')
             .data(timeSlots)
             .enter()
             .append('text')
-            .text(function(d){
+            .text((d) => {
              return toHuman(d);
             })
             .attr('x', 60)

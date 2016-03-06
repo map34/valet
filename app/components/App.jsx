@@ -30,7 +30,8 @@ export default class App extends React.Component {
       days: days,
       times: times,
       cells: cells,
-      mode: 'noparking'
+      mode: 'noparking',
+      update: false
     };
 
     this.Sign = new Sign();
@@ -41,6 +42,17 @@ export default class App extends React.Component {
       mode: e
     })
   };
+
+  _handleResize = (e) => {
+    this.setState({
+      update: !this.state.update
+    });
+  };
+
+  componentDidMount() {
+    window.addEventListener('resize', this._handleResize);
+  };
+
 
   render() {
     let dayHeaders = this.state.days.map( day => <Header headerClick={this._selectRowCol} kind='th' scope={day}/> );
