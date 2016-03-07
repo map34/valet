@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
-    "publish": "surge -p ./build"
+    "surge": "surge -p ./build"
   },
   "author": "",
   "license": "ISC",
