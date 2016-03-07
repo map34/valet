@@ -74,6 +74,7 @@ export default class Sign {
     this._mainHeader();
     this._dayHeaders(data);
     this._drawTimeRects(data);
+    this._drawTimeRectLabels(data);
     this._labelTimeSlots(data);
   }
 
@@ -177,7 +178,7 @@ export default class Sign {
 
   _drawTimeRects(data) {
     let rects = this._createRectData(data);
-    this.svg.selectAll('rect.blocks')
+    let rectNodes = this.svg.selectAll('rect.blocks')
             .data(rects)
             .enter()
             .append('rect')
@@ -189,12 +190,25 @@ export default class Sign {
                 });
                 top += (prev.end) * this._getRowHeightForCol(d.col, rects);
               }
+              if (d.noParking === 'noparking'){
+                top += 2;
+              }
               return top;
             })
             .attr('x', (d) => {
-              return d.col * this.colWidth + margin
+              if (d.noParking === 'noparking'){
+                return d.col * this.colWidth + margin + 2;
+              } else {
+                return d.col * this.colWidth + margin;
+              }
             })
-            .attr('width', this.colWidth - 5)
+            .attr('width', (d) => {
+              if (d.noParking === 'noparking'){
+                return this.colWidth - 5 - 5;
+              } else {
+                return this.colWidth - 5;
+              }
+            })
             .attr('height', (d) => {
               let end = 0;
               if (d.hasOwnProperty('end')){
@@ -219,7 +233,7 @@ export default class Sign {
             })
             .attr('stroke-width', (d) => {
               if (d.noParking == 'noparking'){
-                return 2;
+                return 5;
               } else {
                 return 0;
               }
@@ -231,6 +245,63 @@ export default class Sign {
                 return 'transparent';
               }
             })
+
+      _.each(rectNodes, this._drawP);
+  }
+
+  // _drawP(elem) {
+  //   console.log('elem', elem);
+  //   debugger;
+  //   elem.append('circle')
+  //       .attr({
+  //         cx: 50,
+  //         cy: 50,
+  //         r: 45,
+  //         fill: none,
+  //         stroke: '#ffffff',
+  //         'stroke-width': 10
+  //       });
+  //   elem.append('line')
+  //       .attr({
+  //         x1: 20,
+  //         y1: 20,
+  //         x2: 80,
+  //         y2: 80,
+  //         stroke: '#ffffff',
+  //         'stroke-width': 10
+  //       })
+  //       // <text x="53" y="80" text-anchor="middle" fill="#000" style="font-size: 80px">P</text>
+  // }
+
+  _drawTimeRectLabels(data) {
+    let rects = this._createRectData(data);
+    this.svg.selectAll('text.block-label')
+        .data(rects)
+        .enter()
+        .append('text')
+        .attr('class', 'block-label')
+        .attr('y', (d) => {
+          let top = headerHeight + this.timeHeight;
+          if (d.row > 0){
+            let prev = _.find(rects, (rect) => {
+              return rect.row === d.row - 1 && rect.col === d.col;
+            });
+            top += (prev.end) * this._getRowHeightForCol(d.col, rects);
+          }
+          return top + 30;
+        })
+        .attr('x', (d) => {
+          return (d.col * this.colWidth) + margin + (this.colWidth / 2)
+        })
+        .text((d) => {
+          let label = '';
+          if (!d.noParking){
+            label = 'FREE';
+          } else if (d.noParking === 'onehour') {
+            label = '1 HR';
+          }
+          return label;
+        })
   }
 
   _labelTimeSlots(data) {

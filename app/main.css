@@ -116,6 +116,11 @@ text {
   text-anchor: middle;
 }
 
+text.block-label {
+  fill: #fff;
+  font-size: 18px;
+}
+
 .hide-svg {
   position: absolute;
   top: -20px;
