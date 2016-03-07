@@ -190,7 +190,8 @@ html, body {
 #sign {
   left: 50%;
   bottom: 0;
-  top: 0;
+  top: 20px;
+  position: fixed;
 }
 
 table {
