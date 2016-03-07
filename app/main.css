@@ -234,7 +234,7 @@ tr td:first-child {
 }
 
 .active {
-  background: red;
+  background: #ec1c24;
 }
 
 .slot:hover div.active {
