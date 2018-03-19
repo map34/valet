@@ -10,30 +10,40 @@ const PATHS = {
 };
 
 
-
 const common = {
   entry: PATHS.app,
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   output: {
     path: PATHS.build,
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(eot|svg|ttf|woff|woff2)/,
-        loaders: ['file']
+        use: {
+          loader: 'file-loader'
+        }
       },
       {
         test: /\.css$/,
-        loaders: ['style', 'css'],
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+        ],
         include: PATHS.app
       },
       {
         test: /\.jsx?$/,
-        loaders: ['babel?cacheDirectory'],
+        use: {
+          loader: 'babel-loader'
+        },
         include: PATHS.app
       }
     ]
