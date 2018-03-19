@@ -32,7 +32,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const times = [];
     const cells = {};
 
@@ -125,10 +125,9 @@ export default class App extends React.Component {
     const colsHeaders = [];
     cols.push(newCells[days[0]]);
     colsHeaders.push([days[0]]);
-    debugger;
 
     for (let i = 1; i < days.length; i += 1) {
-      var didMerge = false;
+      let didMerge = false;
       for (let j = 1; j <= cols.length; j += 1) {
         if (_.isEqual(newCells[days[i]], cols[cols.length - j])) {
           colsHeaders[cols.length - j].push(days[i]);
@@ -198,7 +197,8 @@ export default class App extends React.Component {
       <Header
         headerClick={this.selectRowCol}
         kind="th"
-        scope={day}/>
+        scope={day}
+      />
     ));
     const timeDays = time => (this.state.days.map(day => (
       <td>
@@ -206,7 +206,8 @@ export default class App extends React.Component {
           day={day}
           hour={time}
           active={this.state.cells[day][time]}
-          handler={this.handler}/>
+          handler={this.handler}
+        />
       </td>
     )));
     const timeRows = this.state.times.map(time => (
@@ -225,14 +226,16 @@ export default class App extends React.Component {
         <ModePicker
           selected={this.state.mode}
           clickHandler={this.modeClickHandler}
-          selectHandler={this.selectHandler}/>
+          selectHandler={this.selectHandler}
+        />
         <PdfExporter
           svg={this.Sign.getSvg()}
-          fileName="parking.pdf" />
+          fileName="parking.pdf"
+        />
         <table>
           <thead>
             <tr>
-              <th id = "th-first" />
+              <th id="th-first" />
               {dayHeaders}
             </tr>
           </thead>

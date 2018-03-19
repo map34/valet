@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const TARGET = process.env.npm_lifecycle_event;
 process.env.BABEL_ENV = TARGET;
@@ -18,14 +19,17 @@ const common = {
   },
   output: {
     path: PATHS.build,
-    filename: 'bundle.js'
+    filename: '[name].[hash].js'
   },
   module: {
     rules: [
       {
         test: /\.(eot|svg|ttf|woff|woff2)/,
         use: {
-          loader: 'file-loader'
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]'
+          }
         }
       },
       {
@@ -52,8 +56,33 @@ const common = {
         use: {
           loader: 'transform-loader?brfs'
         }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader'
+          }
+        ]
       }
     ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(PATHS.app, 'index.html'),
+      filename: 'index.html'
+    })
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
   }
 };
 
@@ -66,7 +95,6 @@ if (TARGET === 'start' || !TARGET) {
       inline: true,
       progress: true,
 
-      stats: 'errors-only',
       host: process.env.HOST,
       port: process.env.PORT,
     },

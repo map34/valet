@@ -1,44 +1,43 @@
 import d3 from 'd3';
-import jQuery from 'jquery';
 import _ from 'lodash';
 import toHuman from '../helpers/toHuman';
 
 const abbreviations = {
-    'Mon': {
-      2: 'M',
-      3: 'Mon'
-    },
-    'Tue': {
-      2: 'Tu',
-      3: 'Tue'
-    },
-    'Wed': {
-      2: 'W',
-      3: 'Wed'
-    },
-    'Thu': {
-      2: 'Th',
-      3: 'Thu'
-    },
-    'Fri': {
-      2: 'F',
-      3: 'Fri'
-    },
-    'Sat': {
-      2: 'Sa',
-      3: 'Sat'
-    },
-    'Sun': {
-      2: 'Su',
-      3: 'Sun'
-    }
-  };
+  Monday: {
+    2: 'M',
+    3: 'Mon'
+  },
+  Tuesday: {
+    2: 'Tu',
+    3: 'Tue'
+  },
+  Wednesday: {
+    2: 'W',
+    3: 'Wed'
+  },
+  Thursday: {
+    2: 'Th',
+    3: 'Thu'
+  },
+  Friday: {
+    2: 'F',
+    3: 'Fri'
+  },
+  Saturday: {
+    2: 'Sa',
+    3: 'Sat'
+  },
+  Sunday: {
+    2: 'Su',
+    3: 'Sun'
+  }
+};
 
 const totalRows = 24;
 const headerHeight = 100;
 const margin = 100;
-const actual_margin = 15;
-const actual_border = 7;
+const actualMargin = 15;
+const actualBorder = 7;
 const boxBottomMargin = 10;
 const width = 400;
 // const height = 570;
@@ -53,22 +52,22 @@ export default class Sign {
   }
 
   _calculateBounds(data) {
-    //this.width = parseFloat(jQuery(window).width()) / 2  - 20;
     this.width = width;
-    this.innerWidth = this.width - (actual_margin * 2) - (actual_border * 2);
+    this.innerWidth = this.width - (actualMargin * 2) - (actualBorder * 2);
     // this.innerWidth = this.width - (margin * 1.5);
-    //this.height = parseFloat(jQuery(window).height());
-    const parentDiv = document.getElementById("signcontainer");
-    this.height = parentDiv.clientHeight - (actual_margin * 2) - (actual_border * 2);
+    const parentDiv = document.getElementById('signcontainer');
+    this.height = parentDiv.clientHeight - (actualMargin * 2) - (actualBorder * 2);
     // this.height = height;
-    this.innerHeight = this.height - headerHeight - actual_margin;
+    this.innerHeight = this.height - headerHeight - actualMargin;
     this.timeHeight = 0;
     if (d3.select('text.dayheader').node()) {
       this.timeHeight = d3.select('text.dayheader').node().getBBox().height + 20;
     }
     this.innerHeight -= this.timeHeight;
 
-    this.colWidth = ((this.innerWidth) - (actual_margin * 2) - (actual_border * 2) - 4) / (data.headers.length + 1.25);
+    this.colWidth = (
+      (this.innerWidth) - (actualMargin * 2) - (actualBorder * 2) - 4
+    ) / (data.headers.length + 1.25);
     this.rowHeight = (this.innerHeight) / totalRows;
   }
 
@@ -76,36 +75,33 @@ export default class Sign {
     this._calculateBounds(data);
 
     document.getElementById('svg').remove();
-  
+
     this.svg = d3.select('#sign')
       .append('svg')
-        .attr({
-          id: 'svg',
-          width: this.innerWidth,
-          height: this.height
-        })
+      .attr({
+        id: 'svg',
+        width: this.innerWidth,
+        height: this.height
+      })
 
     this.mainHeader();
     this.dayHeaders(data);
     this.drawTimeRects(data);
     this.drawTimeRectLabels(data);
     this.labelTimeSlots(data);
-
-    // const computedToInline = require("computed-style-to-inline-style");
-    // computedToInline(this, { recursive: true });
   }
 
   mainHeader() {
     this.svg.append('rect')
-       .attr({
-        'fill': 'black',
-        'x': 0,
-        'y': 0,
-        'rx': 20,
-        'ry': 20,
-        'width': this.innerWidth,
-        'height': headerHeight
-       });
+      .attr({
+        fill: 'black',
+        x: 0,
+        y: 0,
+        rx: 20,
+        ry: 20,
+        width: this.innerWidth,
+        height: headerHeight
+      });
     this.svg.append('rect')
       .attr({
         'fill': 'black',
@@ -131,8 +127,6 @@ export default class Sign {
     headers = _.map(headers, (header) => {
       if (header.length === 1) {
         return abbreviations[header[0]][3];
-      } else {
-        return abbreviations[header[0]][2] + '-' + abbreviations[header[header.length-1]][2];
       }
       return `${abbreviations[header[0]][2]} - ${abbreviations[header[header.length - 1]][2]}`;
     });
@@ -162,7 +156,7 @@ export default class Sign {
     }).sort((a,b) => { return a - b});
   }
 
-  _createRectData(data) {
+  createRectData(data) {
     let cols = data.cols;
     let rects = [];
 
@@ -196,16 +190,16 @@ export default class Sign {
     return rects;
   }
 
-  _getRowHeightForCol(col, rects) {
+  getRowHeightForCol(col, rects) {
     let numSpaces = _.filter(rects, (rect) => {
       return rect.col === col;
     }).length - 1;
-    //return (this.innerHeight - (numSpaces * boxBottomMargin)) / totalRows;
+    // return (this.innerHeight - (numSpaces * boxBottomMargin)) / totalRows;
     return (this.innerHeight / totalRows);
   }
 
   drawTimeRects(data) {
-    let rects = this._createRectData(data);
+    let rects = this.createRectData(data);
     let rectNodes = this.svg.selectAll('rect.blocks')
             .data(rects)
             .enter()
@@ -216,7 +210,7 @@ export default class Sign {
                 let prev = _.find(rects, (rect) => {
                   return rect.row === d.row - 1 && rect.col === d.col;
                 });
-                top += (prev.end) * this._getRowHeightForCol(d.col, rects);
+                top += (prev.end) * this.getRowHeightForCol(d.col, rects);
               }
               if (d.noParking === 'noparking'){
                 top += 2;
@@ -246,9 +240,9 @@ export default class Sign {
               }
               let rows = end - d.start;
               if (d.noParking === 'noparking'){
-                return (this._getRowHeightForCol(d.col, rects) * rows) - 10;
+                return (this.getRowHeightForCol(d.col, rects) * rows) - 10;
               } else {
-                return (this._getRowHeightForCol(d.col, rects) * rows) - 5;
+                return (this.getRowHeightForCol(d.col, rects) * rows) - 5;
               }
             })
             .attr('fill', (d) => {
@@ -307,60 +301,50 @@ export default class Sign {
   // }
 
   drawTimeRectLabels(data) {
-    let rects = this._createRectData(data);
+    const rects = this.createRectData(data);
     this.svg.selectAll('text.block-label')
-        .data(rects)
-        .enter()
-        .append('text')
-        .attr('class', 'block-label')
-        .attr('y', (d) => {
-          let top = headerHeight + this.timeHeight;
-          if (d.row > 0){
-            let prev = _.find(rects, (rect) => {
-              return rect.row === d.row - 1 && rect.col === d.col;
-            });
-            top += (prev.end) * this._getRowHeightForCol(d.col, rects);
-          }
-          return top + 30;
-        })
-        .attr('x', (d) => {
-          return (d.col * this.colWidth) + margin + (this.colWidth / 2) - 3
-        })
-        .text((d) => {
-          let label = '';
-          if (!d.noParking){
-            label = 'FREE';
-          } else if (d.noParking.indexOf('onehour') !== -1) {
-            label = d.noParking.replace('- onehour','') + ' HR';
-          }
-          return label;
-        })
+      .data(rects)
+      .enter()
+      .append('text')
+      .attr('class', 'block-label')
+      .attr('y', (d) => {
+        let top = headerHeight + this.timeHeight;
+        if (d.row > 0) {
+          const prev = _.find(rects, rect => (
+            rect.row === d.row - 1 && rect.col === d.col
+          ));
+          top += (prev.end) * this.getRowHeightForCol(d.col, rects);
+        }
+        return top + 30;
+      })
+      .attr('x', d => ((d.col * this.colWidth) + margin + (this.colWidth / 2)) - 3)
+      .text((d) => {
+        let label = '';
+        if (!d.noParking) {
+          label = 'FREE';
+        } else if (d.noParking.indexOf('onehour') !== -1) {
+          label = `${d.noParking.replace('- onehour', '')} HR`;
+        }
+        return label;
+      });
   }
 
   labelTimeSlots(data) {
-    let rects = this._createRectData(data);
-    let timeSlots = _.uniq(_.map(rects, (rect) => { return rect.start }));
-    if (timeSlots[0] === 0){
-      timeSlots.shift()
+    const rects = this.createRectData(data);
+    const timeSlots = _.uniq(_.map(rects, rect => rect.start));
+
+    if (timeSlots[0] === 0) {
+      timeSlots.shift();
     }
-    // this.svg.append('text').text('12 am').attr({
-    //   x: 60,
-    //   y: headerHeight + this.rowHeight + 10,
-    //   'font-size': '18px',
-    //   fill: 'black'
-    // });
+
     this.svg.selectAll('text.times')
-            .data(timeSlots)
-            .enter()
-            .append('text')
-            .text((d) => {
-             return toHuman(d);
-            })
-            .attr('x', 60)
-            .attr('y', (d) => {
-             return (d * this.rowHeight) + headerHeight + 45;
-            })
-            .attr('font-size', '18px')
-            .attr('fill', 'black');
+      .data(timeSlots)
+      .enter()
+      .append('text')
+      .text(d => toHuman(d))
+      .attr('x', 60)
+      .attr('y', d => (d * this.rowHeight) + headerHeight + 45)
+      .attr('font-size', '18px')
+      .attr('fill', 'black');
   }
 }

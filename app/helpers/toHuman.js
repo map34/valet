@@ -16,7 +16,7 @@ export default (timeInDecimal) => {
 
   if (timeInDecimal.toString().indexOf('.5') !== -1) {
     min = '30';
-    return hour + ':' + min + marker;
+    return `${hour}:${min + marker}`;
   }
   return hour + marker;
 };
