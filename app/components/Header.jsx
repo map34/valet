@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const toHuman = (timeInDecimal) => {
@@ -20,7 +21,6 @@ const toHuman = (timeInDecimal) => {
 };
 
 export default class Header extends React.Component {
-
   headerClick = (event) => {
     event.preventDefault();
     this.props.headerClick(this.props);
@@ -37,3 +37,15 @@ export default class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  headerClick: PropTypes.func,
+  kind: PropTypes.string,
+  scope: PropTypes.number
+};
+
+Header.defaultProps = {
+  headerClick() { },
+  kind: '',
+  scope: 0
+};

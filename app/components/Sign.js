@@ -1,7 +1,8 @@
 import d3 from 'd3';
-import _ from 'lodash';
-import toHuman from '../helpers/toHuman';
 import jQuery from 'jquery';
+import _ from 'lodash';
+
+import toHuman from '../helpers/toHuman';
 
 const abbreviations = {
     'Mon': {
@@ -33,6 +34,7 @@ const abbreviations = {
       3: 'Sun'
     }
   }
+};
 
 const totalRows = 24;
 const headerHeight = 100;
@@ -63,35 +65,35 @@ export default class Sign {
     // this.height = height;
     this.innerHeight = this.height - headerHeight - actual_margin;
     this.timeHeight = 0;
-    if (d3.select('text.dayheader').node()){
+    if (d3.select('text.dayheader').node()) {
       this.timeHeight = d3.select('text.dayheader').node().getBBox().height + 20;
     }
     this.innerHeight -= this.timeHeight;
 
     this.colWidth = ((this.innerWidth) - (actual_margin * 2) - (actual_border * 2) - 4) / (data.headers.length + 1.25);
     this.rowHeight = (this.innerHeight) / totalRows;
-  };
-
-  render(data) {
-    this._calculateBounds(data);
-
-    document.getElementById('svg').remove()
-    this.svg = d3.select('#sign')
-                 .append('svg')
-                 .attr({
-                    'id': 'svg',
-                    'width': this.width,
-                    'height': this.height
-                  });
-
-    this._mainHeader();
-    this._dayHeaders(data);
-    this._drawTimeRects(data);
-    this._drawTimeRectLabels(data);
-    this._labelTimeSlots(data);
   }
 
-  _mainHeader() {
+  render(data) {
+    this.calculateBounds(data);
+
+    document.getElementById('svg').remove();
+    this.svg = d3.select('#sign')
+      .append('svg')
+      .attr({
+        id: 'svg',
+        width: this.width,
+        height: this.height
+      });
+
+    this.mainHeader();
+    this.dayHeaders(data);
+    this.drawTimeRects(data);
+    this.drawTimeRectLabels(data);
+    this.labelTimeSlots(data);
+  }
+
+  mainHeader() {
     this.svg.append('rect')
        .attr({
         'fill': 'black',
@@ -121,15 +123,16 @@ export default class Sign {
   }
 
 
-  _dayHeaders(data) {
-    let headers = data.headers;
+  dayHeaders(data) {
+    let { headers } = data;
 
-    headers = _.map( headers, (header) => {
-      if (header.length === 1){
+    headers = _.map(headers, (header) => {
+      if (header.length === 1) {
         return abbreviations[header[0]][3];
       } else {
         return abbreviations[header[0]][2] + '-' + abbreviations[header[header.length-1]][2];
       }
+      return `${abbreviations[header[0]][2]} - ${abbreviations[header[header.length - 1]][2]}`;
     });
 
     this.svg.selectAll('text.header')
@@ -147,7 +150,7 @@ export default class Sign {
        .attr('fill', 'black')
        .attr('class', 'dayheader');
 
-    this._calculateBounds(data);
+    this.calculateBounds(data);
   }
 
   _getSortedTimes(col) {
@@ -199,7 +202,7 @@ export default class Sign {
     return (this.innerHeight / totalRows);
   }
 
-  _drawTimeRects(data) {
+  drawTimeRects(data) {
     let rects = this._createRectData(data);
     let rectNodes = this.svg.selectAll('rect.blocks')
             .data(rects)
@@ -297,7 +300,7 @@ export default class Sign {
   //       // <text x="53" y="80" text-anchor="middle" fill="#000" style="font-size: 80px">P</text>
   // }
 
-  _drawTimeRectLabels(data) {
+  drawTimeRectLabels(data) {
     let rects = this._createRectData(data);
     this.svg.selectAll('text.block-label')
         .data(rects)
@@ -328,7 +331,7 @@ export default class Sign {
         })
   }
 
-  _labelTimeSlots(data) {
+  labelTimeSlots(data) {
     let rects = this._createRectData(data);
     let timeSlots = _.uniq(_.map(rects, (rect) => { return rect.start }));
     if (timeSlots[0] === 0){
@@ -352,6 +355,6 @@ export default class Sign {
              return (d * this.rowHeight) + headerHeight + 45;
             })
             .attr('font-size', '18px')
-            .attr('fill', 'black')
+            .attr('fill', 'black');
   }
 }

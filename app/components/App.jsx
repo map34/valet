@@ -8,9 +8,9 @@ import Sign from './Sign';
 import PdfExporter from './PdfExporter';
 
 const mergeRows = (col) => {
-  const times = _.map(_.keys(col), (key) => {
-    return parseFloat(key)
-  }).sort((a, b) => a - b);
+  const times = _.map(_.keys(col), key => (
+    parseFloat(key)
+  )).sort((a, b) => a - b);
 
   const timeBlocks = [];
   const result = {};
@@ -63,7 +63,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this._handleResize);
+    window.addEventListener('resize', this.handleResize);
     window.addEventListener('blur', () => {
       this.setState({
         down: false
@@ -71,25 +71,25 @@ export default class App extends React.Component {
     });
   }
 
-  _modeClickHandler = (e) => {
+  modeClickHandler = (e) => {
     this.setState({
       mode: e
     });
   }
 
-  _selectHandler = (e) => {
+  selectHandler = (e) => {
     this.setState({
       timelength: e.target.value
     });
   }
 
-  _handleResize = () => {
+  handleResize = () => {
     this.setState({
       update: !this.state.update
     });
   }
 
-  _handler = (day, hour, e) => {
+  handler = (day, hour, e) => {
     if (e.type === 'mousedown') {
       this.setState({
         down: true
@@ -115,11 +115,11 @@ export default class App extends React.Component {
       this.setState({
         cells: newCells
       });
-      this._mergeSchedule();
+      this.mergeSchedule();
     }
   };
 
-  _mergeSchedule  = () => {
+  mergeSchedule = () => {
     const newCells = Object.assign({}, this.state.cells);
     const { days } = this.state;
     const cols = [];
@@ -128,7 +128,7 @@ export default class App extends React.Component {
     colsHeaders.push([days[0]]);
 
     for (let i = 1; i < days.length; i += 1) {
-      if ( _.isEqual(newCells[days[i]], cols[cols.length - 1])) {
+      if (_.isEqual(newCells[days[i]], cols[cols.length - 1])) {
         colsHeaders[cols.length - 1].push(days[i]);
       } else {
         cols.push(newCells[days[i]]);
@@ -150,7 +150,7 @@ export default class App extends React.Component {
     });
   }
 
-  _selectRowCol = (props) => {
+  selectRowCol = (props) => {
     const scope = { props };
     const newCells = Object.assign({}, this.state.cells);
     if (props.kind === 'th') {
@@ -185,13 +185,13 @@ export default class App extends React.Component {
     this.setState({
       cells: newCells
     });
-    this._mergeSchedule();
+    this.mergeSchedule();
   }
 
   render() {
     const dayHeaders = this.state.days.map(day => (
       <Header
-        headerClick={this._selectRowCol}
+        headerClick={this.selectRowCol}
         kind="th"
         scope={day}
       />
@@ -202,24 +202,28 @@ export default class App extends React.Component {
           day={day}
           hour={time}
           active={this.state.cells[day][time]}
-          handler={this._handler}
+          handler={this.handler}
         />
       </td>
     )));
     const timeRows = this.state.times.map(time => (
       <tr>
-        <Header headerClick={this._selectRowCol} kind='td' scope={time} />
+        <Header headerClick={this.selectRowCol} kind="td" scope={time} />
         {timeDays(time)}
       </tr>
     ));
 
-    if (this.state.hasOwnProperty('merged')) {
+    if (this.state.merged) {
       this.Sign.render(this.state.merged);
     }
 
     return (
       <div>
-        <ModePicker selected={this.state.mode} clickHandler={this._modeClickHandler} selectHandler={this._selectHandler}/>
+        <ModePicker
+          selected={this.state.mode}
+          clickHandler={this.modeClickHandler}
+          selectHandler={this.selectHandler}
+        />
         <table>
           <thead>
             <tr>

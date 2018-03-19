@@ -1,7 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
 export default class ModePicker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.clickHandler = this.props.clickHandler.bind(this);
+    this.selectHandler = this.props.selectHandler.bind(this);
+  }
 
   render() {
     const onehrclasses = classNames('btn', 'btn-avail', {
@@ -16,23 +22,30 @@ export default class ModePicker extends React.Component {
 
     return (
       <div className="mode-picker">
-        <div className={onehrclasses} onClick={this.props.clickHandler.bind(this, 'onehour')} role="button">
-          <select ref="slotduration" onChange={this.props.selectHandler.bind(this)}>
-            <option val="1">1</option>
-            <option val="2">2</option>
-            <option val="3">3</option>
-            <option val="4">4</option>
-            <option val="5">5</option>
-            <option val="6">6</option>
-            <option val="7">7</option>
-            <option val="8">8</option>
-            <option val="9">9</option>
+        <div className={onehrclasses} onClick={() => this.clickHandler('onehour')} role="presentation">
+          <select ref={() => {}} onChange={this.selectHandler}>
+            {[...Array(10).keys()].map((num) => {
+              const realNum = num + 1;
+              return <option val={`${realNum}`}>{realNum}</option>;
+            })}
           </select>
           HOUR
         </div>
-        <div className={freeclasses} onClick={this.props.clickHandler.bind(this, 'free')}>FREE</div>
-        <div className={noparkingclasses} onClick={this.props.clickHandler.bind(this, 'noparking')}>NO PARKING</div>
+        <div className={freeclasses} onClick={() => this.clickHandler('free')} role="presentation">FREE</div>
+        <div className={noparkingclasses} onClick={() => this.clickHandler('noparking')} role="presentation">NO PARKING</div>
       </div>
     );
   }
 }
+
+ModePicker.propTypes = {
+  selected: PropTypes.string,
+  clickHandler: PropTypes.func,
+  selectHandler: PropTypes.func
+};
+
+ModePicker.defaultProps = {
+  selected: '',
+  clickHandler() { },
+  selectHandler() { }
+};
