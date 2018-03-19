@@ -212,7 +212,8 @@ th, td {
   cursor: pointer;
 }
 
-td::selection {
+td::selection,
+td div::selection {
   background: transparent;
 }
 
@@ -225,6 +226,9 @@ tr td:first-child {
 .slot {
   height: 30px;
   width: 100%;
+  line-height: 30px;
+  vertical-align: middle;
+  color: #fff;
 }
 
 .slot div {

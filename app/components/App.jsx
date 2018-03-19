@@ -31,7 +31,8 @@ export default class App extends React.Component {
       times: times,
       cells: cells,
       mode: 'noparking',
-      update: false
+      update: false,
+      timelength: '1'
     };
 
     this.Sign = new Sign();
@@ -43,6 +44,12 @@ export default class App extends React.Component {
     })
   };
 
+  _selectHandler = (e) => {
+    this.setState({
+      timelength: e.target.value
+    })
+  }
+
   _handleResize = (e) => {
     this.setState({
       update: !this.state.update
@@ -51,6 +58,11 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this._handleResize);
+    window.addEventListener('blur', (e) => {
+      this.setState({
+        down: false
+      });
+    });
   };
 
 
@@ -76,7 +88,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <ModePicker selected={this.state.mode} clickHandler={this._modeClickHandler}/>
+        <ModePicker selected={this.state.mode} clickHandler={this._modeClickHandler} selectHandler={this._selectHandler}/>
         <table>
           <thead>
             <tr>
@@ -107,7 +119,14 @@ export default class App extends React.Component {
 
     if (this.state.down || e.type == 'mousedown') {
       let newCells = Object.assign({}, this.state.cells);
-      newCells[day][hour] = this.state.mode;
+      if (this.state.mode === 'onehour'){
+        newCells[day][hour] = this.state.timelength + '-' + this.state.mode;
+      } else if (this.state.mode === 'free'){
+        newCells[day][hour] = false;
+      } else {
+        newCells[day][hour] = 'noparking';
+      }
+
       this.setState({
         cells: newCells
       });
