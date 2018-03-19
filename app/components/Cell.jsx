@@ -2,18 +2,16 @@ import React from 'react';
 import classnames from 'classnames';
 
 export default class Cell extends React.Component {
-  constructor(props) {
-    super(props);
+  _handler = (e) => {
+    this.props.handler(this.props.day, this.props.hour, e);
   }
 
-
   render() {
-    let classes = classnames('slot', this.props.active);
+    const classes = classnames('slot', this.props.active);
     let label = '';
 
-
-    if (typeof this.props.active === 'string'){
-      if (this.props.active.indexOf('onehour') !== -1){
+    if (typeof this.props.active === 'string') {
+      if (this.props.active.indexOf('onehour') !== -1) {
         label = this.props.active.replace('-onehour','') + ' HR';
       }
     }
@@ -24,8 +22,4 @@ export default class Cell extends React.Component {
       </div>
     );
   }
-
-  _handler = (e) => {
-    this.props.handler(this.props.day, this.props.hour, e);
-  };
 }

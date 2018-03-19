@@ -1,8 +1,9 @@
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
+
 const TARGET = process.env.npm_lifecycle_event;
 process.env.BABEL_ENV = TARGET;
-const webpack = require('webpack');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -48,7 +49,7 @@ const common = {
       }
     ]
   }
-}
+};
 
 if (TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {

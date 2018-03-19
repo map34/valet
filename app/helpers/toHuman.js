@@ -4,10 +4,10 @@ export default (timeInDecimal) => {
   let min = '';
   let marker = 'am';
 
-  if (timeInDecimal >= 13){
+  if (timeInDecimal >= 13) {
     hour = (Math.floor(timeInDecimal) - 12).toString();
     marker = 'pm';
-  } else if (timeInDecimal < 1){
+  } else if (timeInDecimal < 1) {
     hour = 12;
   } else {
     hour = (Math.floor(timeInDecimal)).toString();
@@ -18,5 +18,5 @@ export default (timeInDecimal) => {
     min = '30';
     return hour + ':' + min + marker;
   }
-  return hour + marker;
+  return `${hour}:${min} ${marker}`;
 };
