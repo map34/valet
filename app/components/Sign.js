@@ -38,6 +38,8 @@ const totalRows = 24;
 const headerHeight = 100;
 const margin = 100;
 const boxBottomMargin = 10;
+const width = 400;
+const height = 650;
 
 export default class Sign {
   constructor() {
@@ -45,10 +47,13 @@ export default class Sign {
   }
 
   _calculateBounds(data) {
-    this.width = parseFloat(jQuery(window).width()) / 2  - 20;
-    this.innerWidth = this.width - (margin * 2);
-    this.height = parseFloat(jQuery(window).height());
-    this.innerHeight = this.height - headerHeight - margin;
+    //this.width = parseFloat(jQuery(window).width()) / 2  - 20;
+    this.width = width;
+    this.innerWidth = this.width - (margin * 1.5);
+    //this.height = parseFloat(jQuery(window).height());
+    this.height = height;
+    //this.innerHeight = this.height - headerHeight- margin;
+    this.innerHeight = this.height - headerHeight;
     this.timeHeight = 0;
     if (d3.select('text.dayheader').node()){
       this.timeHeight = d3.select('text.dayheader').node().getBBox().height + 20;
@@ -84,10 +89,20 @@ export default class Sign {
         'fill': 'black',
         'x': 0,
         'y': 0,
+        'rx': 20,
+        'ry': 20,
         'width': this.width,
         'height': headerHeight
        });
-       this.svg.append('text')
+    this.svg.append('rect')
+      .attr({
+        'fill': 'black',
+        'x': 0,
+        'y': headerHeight / 2,
+        'width': this.width,
+        'height': headerHeight / 2
+      });
+    this.svg.append('text')
        .text('PARKING SCHEDULE')
        .attr('class', 'h1')
        .attr('x', (d) => {
@@ -118,7 +133,7 @@ export default class Sign {
        })
        .attr('y', () => { return headerHeight + 30} )
        .attr('x', (d, i) => {
-        return (i * this.colWidth) + (this.colWidth * .5) + margin;
+        return (i * this.colWidth) + (this.colWidth * .5) + margin - 3;
        })
        .attr('font-size', '18px')
        .attr('fill', 'black')
@@ -221,9 +236,9 @@ export default class Sign {
             })
             .attr('fill', (d) => {
               if (d.noParking == 'noparking'){
-                return '#ec1c24';
+                return '#a6192e';
               } else {
-                return '#00a651';
+                return '#006747';
               }
             })
             .attr('class', (d) => {
@@ -240,7 +255,8 @@ export default class Sign {
             })
             .attr('stroke', (d) => {
               if (d.noParking == 'noparking'){
-                return '#ec1c24';
+                return '#a6192e';
+                //return '#ec1c24';
               } else {
                 return 'transparent';
               }
@@ -291,7 +307,7 @@ export default class Sign {
           return top + 30;
         })
         .attr('x', (d) => {
-          return (d.col * this.colWidth) + margin + (this.colWidth / 2)
+          return (d.col * this.colWidth) + margin + (this.colWidth / 2) - 3
         })
         .text((d) => {
           let label = '';
@@ -310,12 +326,12 @@ export default class Sign {
     if (timeSlots[0] === 0){
       timeSlots.shift()
     }
-    this.svg.append('text').text('12 am').attr({
-      x: 60,
-      y: headerHeight + this.rowHeight + 10,
-      'font-size': '18px',
-      fill: 'black'
-    });
+    // this.svg.append('text').text('12 am').attr({
+    //   x: 60,
+    //   y: headerHeight + this.rowHeight + 10,
+    //   'font-size': '18px',
+    //   fill: 'black'
+    // });
     this.svg.selectAll('text.times')
             .data(timeSlots)
             .enter()
@@ -325,7 +341,7 @@ export default class Sign {
             })
             .attr('x', 60)
             .attr('y', (d) => {
-             return (d * this.rowHeight) + headerHeight + 30;
+             return (d * this.rowHeight) + headerHeight + 45;
             })
             .attr('font-size', '18px')
             .attr('fill', 'black')
