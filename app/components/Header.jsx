@@ -37,7 +37,6 @@ export default class Header extends React.Component {
   };
 
   _headerClick = () => {
-    console.log('here');
     this.props.headerClick(this.props)
   };
 }
