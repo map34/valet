@@ -4,31 +4,31 @@ import toHuman from '../helpers/toHuman';
 import jQuery from 'jquery';
 
 const abbreviations = {
-    'Monday': {
+    'Mon': {
       2: 'M',
       3: 'Mon'
     },
-    'Tuesday': {
+    'Tue': {
       2: 'Tu',
       3: 'Tue'
     },
-    'Wednesday': {
+    'Wed': {
       2: 'W',
       3: 'Wed'
     },
-    'Thursday': {
+    'Thu': {
       2: 'Th',
       3: 'Thu'
     },
-    'Friday': {
+    'Fri': {
       2: 'F',
       3: 'Fri'
     },
-    'Saturday': {
+    'Sat': {
       2: 'Sa',
       3: 'Sat'
     },
-    'Sunday': {
+    'Sun': {
       2: 'Su',
       3: 'Sun'
     }
@@ -37,9 +37,11 @@ const abbreviations = {
 const totalRows = 24;
 const headerHeight = 100;
 const margin = 100;
+const actual_margin = 15;
+const actual_border = 7;
 const boxBottomMargin = 10;
 const width = 400;
-const height = 650;
+// const height = 570;
 
 export default class Sign {
   constructor() {
@@ -49,18 +51,20 @@ export default class Sign {
   _calculateBounds(data) {
     //this.width = parseFloat(jQuery(window).width()) / 2  - 20;
     this.width = width;
-    this.innerWidth = this.width - (margin * 1.5);
+    this.innerWidth = this.width - (actual_margin * 2) - (actual_border * 2);
+    // this.innerWidth = this.width - (margin * 1.5);
     //this.height = parseFloat(jQuery(window).height());
-    this.height = height;
-    //this.innerHeight = this.height - headerHeight- margin;
-    this.innerHeight = this.height - headerHeight;
+    var parentDiv = document.getElementById("signcontainer");
+    this.height = parentDiv.clientHeight - (actual_margin * 2) - (actual_border * 2) - 4;
+    // this.height = height;
+    this.innerHeight = this.height - headerHeight - actual_margin;
     this.timeHeight = 0;
     if (d3.select('text.dayheader').node()){
       this.timeHeight = d3.select('text.dayheader').node().getBBox().height + 20;
     }
     this.innerHeight -= this.timeHeight;
 
-    this.colWidth = (this.innerWidth) / data.headers.length
+    this.colWidth = (this.innerWidth) / data.headers.length;
     this.rowHeight = (this.innerHeight) / totalRows;
   };
 
@@ -91,7 +95,7 @@ export default class Sign {
         'y': 0,
         'rx': 20,
         'ry': 20,
-        'width': this.width,
+        'width': this.innerWidth,
         'height': headerHeight
        });
     this.svg.append('rect')
@@ -99,14 +103,14 @@ export default class Sign {
         'fill': 'black',
         'x': 0,
         'y': headerHeight / 2,
-        'width': this.width,
+        'width': this.innerWidth,
         'height': headerHeight / 2
       });
     this.svg.append('text')
        .text('PARKING SCHEDULE')
        .attr('class', 'h1')
        .attr('x', (d) => {
-        return this.width / 2
+        return this.innerWidth / 2
        })
        .attr('y', 72)
        .attr('fill', 'white')
@@ -248,7 +252,7 @@ export default class Sign {
             })
             .attr('stroke-width', (d) => {
               if (d.noParking == 'noparking'){
-                return 5;
+                return 6;
               } else {
                 return 0;
               }

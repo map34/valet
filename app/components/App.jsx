@@ -9,7 +9,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     let times = [];
     let cells = {};
 

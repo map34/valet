@@ -158,12 +158,12 @@ rect.noparking {
 .slot.onehour,
 .slot.free,
 .btn-avail {
-  background: #00a651;
+  background: #006747;
 }
 
 .slot.noparking,
 .btn-noparking {
-  background: #ec1c24;
+  background: #a6192e;
 }
 
 
@@ -191,7 +191,6 @@ html, body {
 
 #app {
   width: 48%;
-  height: 90%;
   float: left;
 }
 
@@ -199,9 +198,9 @@ html, body {
   background-color: white;
   position: fixed;
   left: 45%;
-  top: 5%;
-  /*left: 40%;*/
-  height: 90%;
+  top: 140px;
+  height: 600px;
+  width: 400px;
   border-color: gainsboro;
   border-style: solid;
   border-width: 1px;
@@ -210,10 +209,6 @@ html, body {
 
 #sign {
   margin: 15px;
-  width: 400px;
-  height: 90%;
-  bottom: 0;
-  top: 20px;
   background-color: white;
   border-color: black;
   border-style: solid;
@@ -224,18 +219,31 @@ html, body {
 #btnpdf {
   position: fixed;
   right: 5%;
-  top: 5%;
+  top: 140px;
 }
 
 table {
-  width: 50%;
+  width: 70%;
   font-size: 11px;
   margin: 0 auto;
-  margin-bottom: 50px;
   border-collapse: collapse;
 }
 
-th, td {
+tbody {
+  height: 550px;
+  overflow: auto; 
+}
+
+thead, tbody {
+  display: block;
+}
+
+th {
+  text-align: center;
+  width: 15%;
+}
+
+td {
   text-align: center;
   width: 13%;
   cursor: pointer;
@@ -250,6 +258,10 @@ td div::selection {
 tr th:first-child,
 tr td:first-child {
   width: 5%;
+}
+
+.btn {
+  color: white;
 }
 
 .slot {
