@@ -147,6 +147,7 @@ rect.noparking {
   vertical-align: middle;
   opacity: 0.55;
   font-size: 11px;
+  color: white;
 }
 
 .btn:hover {
@@ -216,9 +217,7 @@ html, body {
   border-radius: 40px;
 }
 
-/*#btnpdf*/
-
-.btn-export {
+#btnpdf {
   position: fixed;
   background: purple;
   right: 5%;

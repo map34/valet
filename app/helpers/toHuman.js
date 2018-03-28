@@ -18,5 +18,5 @@ export default (timeInDecimal) => {
     min = '30';
     return hour + ':' + min + marker;
   }
-  return `${hour}:${min} ${marker}`;
+  return hour + marker;
 };

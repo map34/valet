@@ -34,48 +34,10 @@
       <div id="btnpdf">
         <h2>Download Sign</h2>
         <button id="save_as_pdf" value="">Save as PDF</button>
-
-        <!-- Hidden <FORM> to submit the SVG data to the server, which will convert it to SVG/PDF/PNG downloadable file.
-        The form is populated and submitted by the JavaScript below. 
-        Based off d3export demo: https://d3export.housegordon.org/-->
-        <form id="svgform" method="post">
-          <input type="hidden" id="output_format" name="output_format" value="">
-          <input type="hidden" id="data" name="data" value="">
-        </form>
       </div>
 
       <script src="./bundle.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-      <script type="text/javascript">
-        /*
-           Utility function: populates the <FORM> with the SVG data
-           and the requested output format, and submits the form.
-        */
-        function submit_download_form(output_format)
-        {
-          // Get the d3js SVG element
-          var tmp = document.getElementById("sign");
-          var svg = tmp.getElementsByTagName("svg")[0];
-          // Extract the data as SVG text string
-          var svg_xml = (new XMLSerializer).serializeToString(svg);
-
-          // Submit the <FORM> to the server.
-          // The result will be an attachment file to download.
-          var form = document.getElementById("svgform");
-          form['output_format'].value = output_format;
-          form['data'].value = svg_xml ;
-          debugger;
-          form.submit();
-        }
-
-        $(document).ready(function() {
-          // create_d3js_drawing();
-
-          // Attached actions to the buttons
-          $("#save_as_pdf").click(function() { submit_download_form("pdf"); });
-
-        });
-      </script>
+      
 
     </body>
 </html>

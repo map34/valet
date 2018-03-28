@@ -5,7 +5,6 @@ import ModePicker from './ModePicker';
 import Header from './Header';
 import Cell from './Cell';
 import Sign from './Sign';
-import PdfExporter from './PdfExporter';
 
 const mergeRows = (col) => {
   const times = _.map(_.keys(col), key => (

@@ -1,7 +1,6 @@
 import d3 from 'd3';
 import jQuery from 'jquery';
 import _ from 'lodash';
-
 import toHuman from '../helpers/toHuman';
 
 const abbreviations = {
@@ -33,8 +32,7 @@ const abbreviations = {
       2: 'Su',
       3: 'Sun'
     }
-  }
-};
+  };
 
 const totalRows = 24;
 const headerHeight = 100;
@@ -75,7 +73,7 @@ export default class Sign {
   }
 
   render(data) {
-    this.calculateBounds(data);
+    this._calculateBounds(data);
 
     document.getElementById('svg').remove();
     this.svg = d3.select('#sign')
@@ -150,7 +148,7 @@ export default class Sign {
        .attr('fill', 'black')
        .attr('class', 'dayheader');
 
-    this.calculateBounds(data);
+    this._calculateBounds(data);
   }
 
   _getSortedTimes(col) {
