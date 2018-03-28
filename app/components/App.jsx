@@ -192,8 +192,7 @@ export default class App extends React.Component {
       <Header
         headerClick={this.selectRowCol}
         kind="th"
-        scope={day}
-      />
+        scope={day}/>
     ));
     const timeDays = time => (this.state.days.map(day => (
       <td>
@@ -201,8 +200,7 @@ export default class App extends React.Component {
           day={day}
           hour={time}
           active={this.state.cells[day][time]}
-          handler={this.handler}
-        />
+          handler={this.handler}/>
       </td>
     )));
     const timeRows = this.state.times.map(time => (
@@ -221,8 +219,7 @@ export default class App extends React.Component {
         <ModePicker
           selected={this.state.mode}
           clickHandler={this.modeClickHandler}
-          selectHandler={this.selectHandler}
-        />
+          selectHandler={this.selectHandler}/>
         <table>
           <thead>
             <tr>

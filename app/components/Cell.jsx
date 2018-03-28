@@ -13,7 +13,7 @@ export default class Cell extends React.Component {
 
     if (typeof this.props.active === 'string') {
       if (this.props.active.indexOf('onehour') !== -1) {
-        label = `${this.props.active.replace('-onehour', '')} HR`;
+        label = `${this.props.active.replace('- onehour', '')} HR`;
       }
     }
 

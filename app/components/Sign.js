@@ -323,7 +323,7 @@ export default class Sign {
           if (!d.noParking){
             label = 'FREE';
           } else if (d.noParking.indexOf('onehour') !== -1) {
-            label = d.noParking.replace('-onehour','') + ' HR';
+            label = d.noParking.replace('- onehour','') + ' HR';
           }
           return label;
         })
