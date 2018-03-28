@@ -216,11 +216,16 @@ html, body {
   border-radius: 40px;
 }
 
-#btnpdf {
+/*#btnpdf*/
+
+.btn-export {
   position: fixed;
+  background: purple;
   right: 5%;
   top: 140px;
 }
+
+
 
 table {
   width: 70%;
@@ -258,10 +263,6 @@ td div::selection {
 tr th:first-child,
 tr td:first-child {
   width: 5%;
-}
-
-.btn {
-  color: white;
 }
 
 .slot {

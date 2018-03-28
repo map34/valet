@@ -4,6 +4,7 @@ import Header from './Header.jsx';
 import Cell from './Cell.jsx';
 import _ from 'lodash';
 import Sign from './Sign';
+import PdfExporter from './PdfExporter';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -89,6 +90,7 @@ export default class App extends React.Component {
     return (
       <div>
         <ModePicker selected={this.state.mode} clickHandler={this._modeClickHandler} selectHandler={this._selectHandler}/>
+        <PdfExporter svg={this.Sign.getSvg()} fileName="parkingSpots.pdf"/>
         <table>
           <thead>
             <tr>

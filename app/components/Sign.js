@@ -48,6 +48,10 @@ export default class Sign {
     this.svg = d3.select('#sign');
   }
 
+  getSvg() {
+    return this.svg ? this.svg[0][0] : null;
+  }
+
   _calculateBounds(data) {
     //this.width = parseFloat(jQuery(window).width()) / 2  - 20;
     this.width = width;
@@ -64,7 +68,7 @@ export default class Sign {
     }
     this.innerHeight -= this.timeHeight;
 
-    this.colWidth = (this.innerWidth) / data.headers.length;
+    this.colWidth = ((this.innerWidth) - (actual_margin * 2) - (actual_border * 2) - 4) / (data.headers.length + 1.25);
     this.rowHeight = (this.innerHeight) / totalRows;
   };
 
@@ -124,7 +128,7 @@ export default class Sign {
       if (header.length === 1){
         return abbreviations[header[0]][3];
       } else {
-        return abbreviations[header[0]][2] + ' - ' + abbreviations[header[header.length-1]][2];
+        return abbreviations[header[0]][2] + '-' + abbreviations[header[header.length-1]][2];
       }
     });
 
