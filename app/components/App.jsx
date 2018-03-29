@@ -223,7 +223,7 @@ export default class App extends React.Component {
         <table>
           <thead>
             <tr>
-              <th />
+              <th id = "th-first" />
               {dayHeaders}
             </tr>
           </thead>

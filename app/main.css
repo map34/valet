@@ -244,10 +244,10 @@ thead, tbody {
 
 th {
   text-align: center;
-  width: 15%;
+  width: 170px;
 }
 
-td {
+td, #th-first {
   text-align: center;
   width: 13%;
   cursor: pointer;
