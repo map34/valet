@@ -211,6 +211,8 @@ html, body {
 #sign {
   margin: 15px;
   background-color: white;
+  height: 556px;
+  width: 356px;
   border-color: black;
   border-style: solid;
   border-width: 7px;
@@ -227,7 +229,7 @@ html, body {
 
 
 table {
-  width: 70%;
+  width: 375px;
   font-size: 11px;
   margin: 0 auto;
   border-collapse: collapse;
@@ -242,15 +244,20 @@ thead, tbody {
   display: block;
 }
 
-th {
+tr th {
   text-align: center;
-  width: 170px;
+  width: 12.42%;
 }
 
-td, #th-first {
-  text-align: center;
-  width: 13%;
+tr th:first-child,
+td {
+  width: 45px;
   cursor: pointer;
+}
+
+tr td:first-child {
+  text-align: right;
+  padding-right: 5px;
 }
 
 td::selection,
@@ -258,14 +265,8 @@ td div::selection {
   background: transparent;
 }
 
-
-tr th:first-child,
-tr td:first-child {
-  width: 5%;
-}
-
 .slot {
-  height: 20px;
+  height: 25px;
   width: 100%;
   line-height: 30px;
   vertical-align: middle;
@@ -299,10 +300,11 @@ text.h1 {
 
 
 @media print {
-  #app {
+  #app, #title, #btnpdf {
     display: none;
   }
-  #sign {
+  #signcontainer {
+    top: 0;
     left: 0;
   }
 }

@@ -59,7 +59,7 @@ export default class Sign {
     // this.innerWidth = this.width - (margin * 1.5);
     //this.height = parseFloat(jQuery(window).height());
     var parentDiv = document.getElementById("signcontainer");
-    this.height = parentDiv.clientHeight - (actual_margin * 2) - (actual_border * 2) - 4;
+    this.height = parentDiv.clientHeight - (actual_margin * 2) - (actual_border * 2);
     // this.height = height;
     this.innerHeight = this.height - headerHeight - actual_margin;
     this.timeHeight = 0;
@@ -80,7 +80,7 @@ export default class Sign {
       .append('svg')
       .attr({
         id: 'svg',
-        width: this.width,
+        width: this.innerWidth,
         height: this.height
       });
 
@@ -241,7 +241,11 @@ export default class Sign {
                 end = 24;
               }
               let rows = end - d.start;
-              return (this._getRowHeightForCol(d.col, rects) * rows) - boxBottomMargin;
+              if (d.noParking === 'noparking'){
+                return (this._getRowHeightForCol(d.col, rects) * rows) - 10;
+              } else {
+                return (this._getRowHeightForCol(d.col, rects) * rows) - 5;
+              }
             })
             .attr('fill', (d) => {
               if (d.noParking == 'noparking'){
