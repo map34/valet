@@ -46,6 +46,12 @@ const common = {
           loader: 'babel-loader'
         },
         include: PATHS.app
+      },
+      {
+        test: /node_modules\/(pdfkit|fontkit|png-js|linebreak|unicode-properties|brotli)\//,
+        use: {
+          loader: 'transform-loader?brfs'
+        }
       }
     ]
   }

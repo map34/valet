@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-
+import PdfExporter from './PdfExporter';
 import ModePicker from './ModePicker';
 import Header from './Header';
 import Cell from './Cell';
@@ -220,6 +220,9 @@ export default class App extends React.Component {
           selected={this.state.mode}
           clickHandler={this.modeClickHandler}
           selectHandler={this.selectHandler}/>
+        <PdfExporter
+          svg={this.Sign.getSvg()}
+          fileName="parking.pdf" />
         <table>
           <thead>
             <tr>

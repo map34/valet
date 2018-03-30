@@ -219,11 +219,16 @@ html, body {
   border-radius: 40px;
 }
 
-#btnpdf {
+.btnpdf {
   position: fixed;
-  background: purple;
   right: 5%;
   top: 140px;
+  width: 150px;
+  height: 70px;
+  background: white;
+  color: black;
+  border-color: black;
+  border-width: 3px;
 }
 
 

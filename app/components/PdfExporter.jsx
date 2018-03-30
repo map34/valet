@@ -41,14 +41,13 @@ const PdfExporter = (props) => {
   const { fileName } = props;
   const { svg } = props;
 
-  const buttonClass = classNames('btn', 'btn-export', 'btn-active');
+  const buttonClass = classNames('btn', 'btnpdf', 'btn-active', 'btn-avail');
 
   return (
     <button
       className={buttonClass}
-      onClick={event => clickHandler(event, svg, fileName)}
-    >
-    Export PDF
+      onClick={event => clickHandler(event, svg, fileName)} >
+    Download .PDF
     </button>
   );
 };
@@ -65,3 +64,6 @@ PdfExporter.defaultProps = {
 };
 
 export default PdfExporter;
+
+
+
