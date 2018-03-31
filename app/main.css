@@ -223,12 +223,14 @@ html, body {
   position: fixed;
   right: 5%;
   top: 140px;
-  width: 150px;
+  width: 100px;
   height: 70px;
   background: white;
   color: black;
   border-color: black;
   border-width: 3px;
+  font-family: 'overpassbold', sans-serif;
+  font-size: 13px;
 }
 
 
@@ -273,7 +275,6 @@ td div::selection {
 .slot {
   height: 25px;
   width: 100%;
-  line-height: 30px;
   vertical-align: middle;
   color: #fff;
 }

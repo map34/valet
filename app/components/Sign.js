@@ -58,7 +58,7 @@ export default class Sign {
     this.innerWidth = this.width - (actual_margin * 2) - (actual_border * 2);
     // this.innerWidth = this.width - (margin * 1.5);
     //this.height = parseFloat(jQuery(window).height());
-    var parentDiv = document.getElementById("signcontainer");
+    const parentDiv = document.getElementById("signcontainer");
     this.height = parentDiv.clientHeight - (actual_margin * 2) - (actual_border * 2);
     // this.height = height;
     this.innerHeight = this.height - headerHeight - actual_margin;
@@ -76,6 +76,8 @@ export default class Sign {
     this._calculateBounds(data);
 
     document.getElementById('svg').remove();
+
+    const getdefs = document.getElementById('defssvg');
     this.svg = d3.select('#sign')
       .append('svg')
       .attr({
@@ -83,12 +85,16 @@ export default class Sign {
         width: this.innerWidth,
         height: this.height
       });
+    this.svg.append('getdefs');
 
     this.mainHeader();
     this.dayHeaders(data);
     this.drawTimeRects(data);
     this.drawTimeRectLabels(data);
     this.labelTimeSlots(data);
+
+    // const computedToInline = require("computed-style-to-inline-style");
+    // computedToInline(this, { recursive: true });
   }
 
   mainHeader() {
