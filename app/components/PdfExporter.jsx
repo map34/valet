@@ -22,17 +22,9 @@ const savePdf = (blobUrl, fileName) => {
 };
 
 const createPdf = (svg, fileName) => {
-  const getdefs = document.getElementById('defssvg');
-  // const pattern = document.getElementById('pattern-stripe');
-  // const mask = document.getElementById('mask-stripe');
-  // const fonts = document.getElementById('fonts');
-  // getdefs.appendChild(pattern);
-  // getdefs.appendChild(mask);
-  // getdefs.appendChild(fonts);
-  console.log(getdefs);
-  debugger;
-
-  svg.appendChild(getdefs);
+  const getdefs = document.getElementById('defssvg').cloneNode([true]);
+  
+  svg.append(getdefs);
   computedToInline(svg, { recursive: true });
 
   const pdfDoc = new PDFKit({ compress: true });
