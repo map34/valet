@@ -9,6 +9,9 @@
         <h1>Parking Sign Generator</h1>
         <h2>Fix a parking sign in your neighborhood</h2>
       </div>
+      <div id="footer">
+        <p>Made by Nikki Sylianteng in collaboration with Amber Kim and Javi Javier.</p>
+      </div>
       <div id="app"></div>
       <div id="signcontainer">
         <div id="sign">
@@ -18,13 +21,12 @@
                 width="20" height="20"
                 patternUnits="userSpaceOnUse"
                 patternTransform="rotate(45)">
-                <rect width="10" height="20" transform="translate(0,0)" fill="#a6192e"></rect>
+                <rect width="10" height="50" transform="translate(0,0)" fill="#a6192e"></rect>
               </pattern>
               <mask id="mask-stripe">
                 <rect x="0" y="0" width="1000" height="1000" fill="url(#pattern-stripe)" />
               </mask>
               <style id="fonts" type="text/css">
-                <![CDATA[
                   @font-face {
                       font-family: 'league_gothicregular';
                       src: url('/fonts/leaguegothic-regular-webfont.eot');
@@ -136,9 +138,7 @@
                            url('/fonts/overpass_regular-webfont.svg#overpassregular') format('svg');
                       font-weight: normal;
                       font-style: normal;
-                  }
-                ]]>
-                
+                  }                
              </style>
             </defs>
           </svg>
@@ -146,6 +146,8 @@
         </div>
         
       </div>
+
+
 
       <script src="./bundle.js"></script>
       

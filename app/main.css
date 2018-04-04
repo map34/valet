@@ -188,6 +188,13 @@ html, body {
 
 #title {
   margin: 40px;
+  width: 50%;
+}
+
+#footer {
+  position: fixed;
+  right: 5%;
+  top: 40px;
 }
 
 #app {
@@ -306,7 +313,7 @@ text.h1 {
 
 
 @media print {
-  #app, #title, #btnpdf {
+  #app, #title, #btnpdf, #footer {
     display: none;
   }
   #signcontainer {

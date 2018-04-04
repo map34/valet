@@ -23,7 +23,6 @@ const savePdf = (blobUrl, fileName) => {
 
 const createPdf = (svg, fileName) => {
   const getdefs = document.getElementById('defssvg').cloneNode([true]);
-  
   svg.append(getdefs);
   computedToInline(svg, { recursive: true });
 
