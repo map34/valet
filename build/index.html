@@ -12,8 +12,8 @@
       <div id="app"></div>
       <div id="signcontainer">
         <div id="sign">
-          <svg id="defssvg" class="hide-svg">
-            <defs>
+          <svg class="hide-svg">
+            <defs id="defssvg">
               <pattern id="pattern-stripe"
                 width="20" height="20"
                 patternUnits="userSpaceOnUse"
@@ -23,7 +23,7 @@
               <mask id="mask-stripe">
                 <rect x="0" y="0" width="1000" height="1000" fill="url(#pattern-stripe)" />
               </mask>
-              <style type="text/css">
+              <style id="fonts" type="text/css">
                 @font-face {
                 font-family: 'league_gothicregular';
                 src: url('/fonts/leaguegothic-regular-webfont.eot');

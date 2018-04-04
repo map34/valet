@@ -283,7 +283,7 @@ td div::selection {
   height: 100%;
 }
 
-.slot:hover {
+.slot:hover, .btnpdf:hover {
   cursor: pointer;
 }
 

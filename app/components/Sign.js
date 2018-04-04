@@ -76,16 +76,14 @@ export default class Sign {
     this._calculateBounds(data);
 
     document.getElementById('svg').remove();
-
-    const getdefs = document.getElementById('defssvg');
+  
     this.svg = d3.select('#sign')
       .append('svg')
-      .attr({
-        id: 'svg',
-        width: this.innerWidth,
-        height: this.height
-      });
-    this.svg.append('getdefs');
+        .attr({
+          id: 'svg',
+          width: this.innerWidth,
+          height: this.height
+        })
 
     this.mainHeader();
     this.dayHeaders(data);

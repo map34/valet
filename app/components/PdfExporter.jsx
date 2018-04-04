@@ -4,6 +4,7 @@ import React from 'react';
 import PDFKit from 'pdfkit';
 import PropTypes from 'prop-types';
 import SVGtoPDF from 'svg-to-pdfkit';
+import computedToInline from 'computed-style-to-inline-style';
 
 // export default class PdfExporter extends React.Component {
 
@@ -21,6 +22,19 @@ const savePdf = (blobUrl, fileName) => {
 };
 
 const createPdf = (svg, fileName) => {
+  const getdefs = document.getElementById('defssvg');
+  // const pattern = document.getElementById('pattern-stripe');
+  // const mask = document.getElementById('mask-stripe');
+  // const fonts = document.getElementById('fonts');
+  // getdefs.appendChild(pattern);
+  // getdefs.appendChild(mask);
+  // getdefs.appendChild(fonts);
+  console.log(getdefs);
+  debugger;
+
+  svg.appendChild(getdefs);
+  computedToInline(svg, { recursive: true });
+
   const pdfDoc = new PDFKit({ compress: true });
   SVGtoPDF(pdfDoc, svg.outerHTML, 0, 0);
 
