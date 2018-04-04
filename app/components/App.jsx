@@ -125,11 +125,17 @@ export default class App extends React.Component {
     const colsHeaders = [];
     cols.push(newCells[days[0]]);
     colsHeaders.push([days[0]]);
+    debugger;
 
     for (let i = 1; i < days.length; i += 1) {
-      if (_.isEqual(newCells[days[i]], cols[cols.length - 1])) {
-        colsHeaders[cols.length - 1].push(days[i]);
-      } else {
+      var didMerge = false;
+      for (let j = 1; j <= cols.length; j += 1) {
+        if (_.isEqual(newCells[days[i]], cols[cols.length - j])) {
+          colsHeaders[cols.length - j].push(days[i]);
+          didMerge = true;
+        }
+      }
+      if (!didMerge) {
         cols.push(newCells[days[i]]);
         colsHeaders.push([days[i]]);
       }
